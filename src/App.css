@@ -1,10 +1,15 @@
 .mainContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   gap: 24px;
   padding: 24px;
   height: 100svh;
   /* border: 1px black dashed; */
+}
+
+.digitContainer {
+  display: flex;
+  gap: 24px;
 }
 
 .digitSections {
@@ -12,7 +17,7 @@
   gap: 8px;
 }
 
-.digitContainer {
+.digitSliders {
   display: flex;
   flex-direction: column;
   align-items: center;
