@@ -100,8 +100,6 @@ function App() {
     // Night theme
     if (hour >= 19 || hour <= 5) aestheticClassName = 'nightTime';
 
-    console.log({ aestheticClassName, hour });
-
     setBgAsthetics(aestheticClassName);
   };
 
