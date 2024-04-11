@@ -5,17 +5,18 @@ import './App.css';
 const calculateDisplacement = (value) => {
   /**
    *
-   * 150 is the translated value 150px
+   * 250 is the translated value 250px
    * 15 is the font size i.e. 15px
    * 8 is the gap value i.e. 4px top and bottom, so 8px
    * adjust these values accordingly
    *
    * */
-  return 150 - value * (15 + 8);
+  return 250 - value * (15 + 8);
 };
 
 function App() {
   const [is12hFormatChecked, setis12hFormatChecked] = useState(false);
+  const [bgAsthetics, setBgAsthetics] = useState('');
 
   const splitDigits = useCallback((value, sliderSectionId) => {
     const digit1 = Math.floor(value / 10);
@@ -65,6 +66,43 @@ function App() {
     });
   };
 
+  const highlightFormat = (hour) => {
+    const element = document.getElementById('format-section');
+
+    if (!element) return;
+
+    const [formatCol] = element.childNodes;
+
+    // As we are having two formats so 0 will be AM and 1 will be PM
+    const formatIndex = hour >= 13 ? 1 : 0;
+
+    anime({
+      targets: `#${formatCol.id}`,
+      translateY: calculateDisplacement(formatIndex),
+      duration: 10000,
+      easing: 'spring()',
+    });
+
+    // console.log({ hour, element });
+    formatCol.childNodes.forEach((format, index) => {
+      console.log({ format, index });
+      format.classList.toggle('activeDigit', index == formatIndex);
+    });
+  };
+
+  const setBgColorAccordingToTime = (hour) => {
+    let aestheticClassName = '';
+
+    // day time
+    if (hour >= 5 && hour <= 17) aestheticClassName = 'dayTime';
+    // evening time
+    if (hour >= 17 && hour <= 19) aestheticClassName = 'eveTime';
+    // Night theme
+    if (hour >= 19 && hour <= 5) aestheticClassName = 'nightTime';
+
+    setBgAsthetics(aestheticClassName);
+  };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       const currentDateTime = new Date();
@@ -78,6 +116,9 @@ function App() {
       const hours = currentDateTime.getHours();
       const formattedHours =
         is12hFormatChecked && hours >= 13 ? hours - 12 : hours;
+
+      setBgColorAccordingToTime(hours);
+      if (is12hFormatChecked) highlightFormat(hours);
 
       // setting the time values and formatting them into relevant portions
       splitDigits(formattedHours, 'hour-section');
@@ -94,11 +135,15 @@ function App() {
 
   return (
     <div className="">
-      <div className="mainContainer">
-        <div>
-          <p>Time format: HH:MM:SS</p>
+      <div className={`mainContainer ${bgAsthetics}`}>
+        <div className="formatOptionsContainer">
+          <p style={{ width: '100%' }}>
+            Time format: HH:MM:SS{' '}
+            <span>{is12hFormatChecked ? 'AM|PM' : ''}</span>
+          </p>
           <div>
             <input
+              className="formatCheckbox"
               type="checkbox"
               name="timeFormat"
               checked={is12hFormatChecked}
@@ -106,6 +151,9 @@ function App() {
             />
             <label htmlFor="timeFormat">12H Format?</label>
           </div>
+          <p style={{ fontSize: '16px' }}>
+            Bg Color changes according to time of the day!
+          </p>
         </div>
         <div className="digitContainer">
           {/*  */}
@@ -180,6 +228,22 @@ function App() {
               <div id="secondCol2-9">9</div>
             </div>
           </section>
+          {/*  */}
+          {/* am/pm section */}
+          {/*  */}
+          {is12hFormatChecked && (
+            <section
+              id="format-section"
+              className={`digitSections ${
+                is12hFormatChecked ? 'formatSection' : ''
+              }`}
+            >
+              <div id="format-container" className="digitSliders">
+                <div id="formatAM">AM</div>
+                <div id="formatPM">PM</div>
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>

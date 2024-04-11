@@ -1,15 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --slowFadeInDuration: 1.5s;
+}
+
 .mainContainer {
   display: flex;
   justify-content: space-around;
   gap: 24px;
-  padding: 24px;
   height: 100svh;
   /* border: 1px black dashed; */
 }
 
+.formatOptionsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  width: 50%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 40px;
+
+  /* border: 1px red dashed; */
+}
+
+.formatCheckbox {
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  border-radius: 1000px;
+}
+
 .digitContainer {
   display: flex;
+  padding: 0 24px;
   gap: 24px;
+  width: 50%;
+  /* border: 1px red dashed; */
 }
 
 .digitSections {
@@ -27,17 +58,28 @@
   font-size: 16px;
   text-align: center;
   font-weight: 900;
-  color: gray;
+  color: white;
 
   width: 60px;
   height: min-content;
 
   padding: 14px 0;
+  /* https://uigradients.com/#DeepSpace */
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  background-color: cyan;
   border-radius: 12px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  transform: translateY(150px);
+  box-shadow: 0px 4px 4px rgba(249, 249, 249, 0.5);
+  transform: translateY(250px);
 }
 
 .activeDigit {
@@ -53,11 +95,73 @@
   border: 1px cyan solid;
   border-radius: 100%;
   box-shadow: 0px 0px 5px rgba(0, 160, 160, 0.55);
-  -webkit-animation: fadeinout 1s linear forwards;
-  animation: fadeinout 1s linear forwards;
+  -webkit-animation: fadein 1s linear forwards;
+  animation: fadein 1s linear forwards;
 }
 
-@-webkit-keyframes fadeinout {
+.formatSection {
+  -webkit-animation: fadein 1s linear forwards;
+  animation: fadein 1s linear forwards;
+}
+
+.dayTime {
+  -webkit-animation: slowfadein var(--slowFadeInDuration) linear forwards;
+  animation: slowfadein var(--slowFadeInDuration) linear forwards;
+  /* https://uigradients.com/#Flare */
+  background: #f12711; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    yellow,
+    #f5af19,
+    #f12711
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    yellow,
+    #f5af19,
+    #f12711
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.eveTime {
+  -webkit-animation: slowfadein var(--slowFadeInDuration) linear forwards;
+  animation: slowfadein var(--slowFadeInDuration) linear forwards;
+  /* https://uigradients.com/#Sunset */
+  background: #0b486b; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #f12711,
+    #f56217,
+    #0b486b
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #f12711,
+    #f56217,
+    #0b486b
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.nightTime {
+  -webkit-animation: slowfadein var(--slowFadeInDuration) linear forwards;
+  animation: slowfadein var(--slowFadeInDuration) linear forwards;
+  /* https://uigradients.com/#MoonlitAsteroid */
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+@-webkit-keyframes fadein {
   0% {
     opacity: 0.5;
   }
@@ -66,9 +170,45 @@
   }
 }
 
-@keyframes fadeinout {
+@keyframes fadein {
   0% {
     opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slowfadein {
+  0% {
+    opacity: 0.1;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slowfadein {
+  0% {
+    opacity: 0.1;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
   }
   100% {
     opacity: 1;
